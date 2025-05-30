@@ -1,4 +1,4 @@
-package com.akshay.todo
+package com.akshay.todo.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

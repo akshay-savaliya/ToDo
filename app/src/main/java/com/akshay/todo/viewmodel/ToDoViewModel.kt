@@ -1,10 +1,12 @@
-package com.akshay.todo
+package com.akshay.todo.viewmodel
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.akshay.todo.MainApplication
+import com.akshay.todo.model.ToDoModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.Instant
@@ -12,7 +14,7 @@ import java.util.Date
 
 class ToDoViewModel : ViewModel() {
 
-    val toDoDao = MainApplication.toDoDatabase.getToDoDao()
+    val toDoDao = MainApplication.Companion.toDoDatabase.getToDoDao()
 
     val toDoList: LiveData<List<ToDoModel>>
         get() = toDoDao.getAllToDos()

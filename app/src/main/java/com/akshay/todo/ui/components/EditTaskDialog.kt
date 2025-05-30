@@ -1,4 +1,4 @@
-package com.akshay.todo
+package com.akshay.todo.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.akshay.todo.model.ToDoModel
 
 @Composable
 fun EditTaskDialog(
