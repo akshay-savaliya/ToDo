@@ -45,7 +45,7 @@ fun ToDoListPage(viewModel: ToDoViewModel, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
     ) {
         Column(
             modifier = Modifier
