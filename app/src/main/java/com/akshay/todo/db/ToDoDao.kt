@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.akshay.todo.ToDoModel
 
 @Dao
@@ -18,4 +19,7 @@ interface ToDoDao {
 
     @Query("DELETE FROM todo WHERE id = :id")
     suspend fun deleteToDo(id: Int)
+
+    @Update
+    fun updateToDo(todo: ToDoModel)
 }

@@ -38,6 +38,7 @@ fun ToDoListPage(viewModel: ToDoViewModel, modifier: Modifier = Modifier) {
     val toDoList by viewModel.toDoList.observeAsState()
     var inputText by rememberSaveable { mutableStateOf("") }
     var selectedTask by remember { mutableStateOf<ToDoModel?>(null) }
+    var editTask by remember { mutableStateOf<ToDoModel?>(null) }
 
     val context = LocalContext.current
 
@@ -100,7 +101,8 @@ fun ToDoListPage(viewModel: ToDoViewModel, modifier: Modifier = Modifier) {
                     TodoItem(
                         item = item,
                         onDelete = { viewModel.deleteToDo(item.id) },
-                        onClick = { selectedTask = it } // Show dialog on click
+                        onClick = { selectedTask = it }, // Show dialog on click
+                        onEdit = { editTask = it }
                     )
                 }
             }
@@ -108,6 +110,14 @@ fun ToDoListPage(viewModel: ToDoViewModel, modifier: Modifier = Modifier) {
 
         selectedTask?.let { task ->
             TaskDetailsDialog(task = task, onDismiss = { selectedTask = null })
+        }
+
+        editTask?.let { task ->
+            EditTaskDialog(
+                task = task,
+                onDismiss = { editTask = null },
+                onUpdate = { viewModel.updateToDo(it) }
+            )
         }
     }
 }

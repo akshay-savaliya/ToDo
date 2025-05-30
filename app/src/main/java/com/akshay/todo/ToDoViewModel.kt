@@ -29,4 +29,10 @@ class ToDoViewModel : ViewModel() {
             toDoDao.deleteToDo(id)
         }
     }
+
+    fun updateToDo(item: ToDoModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            toDoDao.updateToDo(item)
+        }
+    }
 }

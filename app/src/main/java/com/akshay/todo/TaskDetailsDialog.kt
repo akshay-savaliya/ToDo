@@ -43,7 +43,7 @@ fun TaskDetailsDialog(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 100.dp, max = 300.dp) // fix height range
+                    .heightIn(max = 300.dp) // fix height range
                     .verticalScroll(rememberScrollState())
             ) {
                 Text(
