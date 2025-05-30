@@ -1,6 +1,5 @@
 package com.akshay.todo
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,10 +17,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
@@ -30,15 +25,16 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 @Composable
-fun TodoItem(item: ToDoModel, onDelete: () -> Unit) {
-
-    var isExpanded by remember { mutableStateOf(false) }
-
+fun TodoItem(
+    item: ToDoModel,
+    onDelete: () -> Unit,
+    onClick: (ToDoModel) -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 6.dp, horizontal = 8.dp)
-            .clickable { isExpanded = !isExpanded }, // Toggle on click
+            .clickable { onClick(item) },
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
@@ -49,11 +45,7 @@ fun TodoItem(item: ToDoModel, onDelete: () -> Unit) {
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .animateContentSize()
-            ) {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = SimpleDateFormat(
                         "hh:mm a dd MMM yyyy",
@@ -67,8 +59,8 @@ fun TodoItem(item: ToDoModel, onDelete: () -> Unit) {
                     text = item.title,
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    maxLines = if (isExpanded) Int.MAX_VALUE else 3,
-                    overflow = if (isExpanded) TextOverflow.Clip else TextOverflow.Ellipsis
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
             IconButton(onClick = onDelete) {

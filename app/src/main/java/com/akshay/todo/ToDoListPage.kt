@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -36,6 +37,7 @@ fun ToDoListPage(viewModel: ToDoViewModel, modifier: Modifier = Modifier) {
 
     val toDoList by viewModel.toDoList.observeAsState()
     var inputText by rememberSaveable { mutableStateOf("") }
+    var selectedTask by remember { mutableStateOf<ToDoModel?>(null) }
 
     val context = LocalContext.current
 
@@ -94,10 +96,18 @@ fun ToDoListPage(viewModel: ToDoViewModel, modifier: Modifier = Modifier) {
             )
         } else {
             LazyColumn {
-                itemsIndexed(toDoList!!) { index, item ->
-                    TodoItem(item = item, onDelete = { viewModel.deleteToDo(item.id) })
+                itemsIndexed(toDoList!!) { _, item ->
+                    TodoItem(
+                        item = item,
+                        onDelete = { viewModel.deleteToDo(item.id) },
+                        onClick = { selectedTask = it } // Show dialog on click
+                    )
                 }
             }
+        }
+
+        selectedTask?.let { task ->
+            TaskDetailsDialog(task = task, onDismiss = { selectedTask = null })
         }
     }
 }
